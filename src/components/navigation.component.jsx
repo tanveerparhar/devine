@@ -28,7 +28,6 @@ function NavigationBar() {
             <Nav.Link href="#link" className='px-3'>Our Story</Nav.Link>
             <Link to={`/wines`} className='px-3 '>Shop</Link>
             <Link to={`/add-wine`} className='px-3 '>Add Wines</Link>
-            <Link to={`/add-category`} className='px-3 '>Add Category</Link>
           </div>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -54,14 +53,14 @@ function NavigationBar() {
                   height="30"
                   className=""/>Log In
             </Nav.Link> */}
-            <Nav.Link href="#link" className="m-2">
+            <Link to={`/cart`} className="m-2">
               <img alt=""
                   src={cart} //user
                   width="30"
                   height="30"
                   className=""
               />
-            </Nav.Link>
+            </Link>
           </Navbar.Collapse>
         </Container>
       </Navbar>

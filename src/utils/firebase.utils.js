@@ -44,6 +44,7 @@ export const createUser = async (email,password) => {
    }
    return user;
 }
+
 //sign in
 export const signInUser = async (email,password) => {
    try{
@@ -71,7 +72,8 @@ export const createWineCollec = async({wineName,wineCategory,wineLocation,wineRa
       await uploadBytes(storageRef, wineImage).then((snapshot) => {
          console.log('Uploaded the file!  ',snapshot);
       });
-      
+      //cosnvert to lowercase
+      wineCategory = wineCategory.toLowerCase();
       const docRef = await addDoc(winesRef, {
          wineName,
          wineCategory,

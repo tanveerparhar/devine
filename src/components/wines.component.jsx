@@ -4,10 +4,15 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import wineDefault from "../assets/wineDefault.png";
 import { winesRef } from '../utils/firebase.utils';
-import { query, where, getDocs } from "firebase/firestore";
+import { query, where, getDocs, orderBy } from "firebase/firestore";
+import OffCanvasSidebar from './offCanvasSidebar.component';
 
 const Wines = () => {
     const [wines, setWines] = useState([]);
+    const [showOffCanvas, setShowOffCanvas] = useState(false);
+    const handleClose = () => setShowOffCanvas(false);
+    const handleShow = () => setShowOffCanvas(true);
+
     useEffect(() => {
         loadWines("rose");
     }, []);
@@ -25,13 +30,12 @@ const Wines = () => {
         currentTarget.src = wineDefault;
     }
 
-    // Create a query against the collection.
-    const onCategorySelect = async () =>{
+    //reusable snapshot code
+    const handleSnapshot = async(qry) => {
         const newWines =[];
         try{
-            const result = query(winesRef, where("wineCategory", "==", "asf"));
-            //console.log(" wine category result=> ", result);
-            const querySnapshot = await getDocs(result);
+        const res = query(winesRef, qry);
+        const querySnapshot = await getDocs(res);
             // console.log("snapshot => ", querySnapshot);
             querySnapshot.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
@@ -52,39 +56,54 @@ const Wines = () => {
         //console.log(newWines)
         setWines(newWines);
     }
+    // Create a query against the collection.
+    const onCategorySelect = async (category) =>{
+       
+    }
+
+    const handleFilterCategory = async (category) =>{
+        handleSnapshot(where("wineCategory", "==", `${category}`))
+     }
+
+    const handleSortRating = () => {
+       handleSnapshot(orderBy("wineRating"))
+    }
 
     return(
-        <Container className='d-flex'>
-        <div className='d-flex flex-column-reverse justify-content-end my-4'>
-            {/* <div>Categories</div> */}
-            <Card style={{ width: '7.96rem' }} className='my-3'>
-                <Card.Img variant="top" src="holder.js/100px180" />
-                <Card.Body>
-                <Card.Text>
-                <Button onClick={()=>loadWines("reds")}>REDS</Button>
-                </Card.Text>
-                </Card.Body>
-            </Card>
-            <Card style={{ width: '7.96rem' }} className='my-3'>
-                <Card.Img variant="top" src="holder.js/100px180" />
-                <Card.Body>
+        <Container className=''>
+            <div className='display-6'><i>CATEGORIES</i></div>
+            <div className='d-flex my-4'>
+                <Card style={{ width: '7.96rem' }} className='mr-3'>
+                    <Card.Img variant="top" src="holder.js/100px180" />
+                    <Card.Body>
                     <Card.Text>
-                    <Button onClick={()=>loadWines("whites")}>WHITES</Button>
+                    <Button onClick={()=>loadWines("reds")}>REDS</Button>
                     </Card.Text>
-                </Card.Body>
-            </Card>
-            <Card style={{ width: '7.96rem' }} className='my-3'>
-            <Card.Header >Categories</Card.Header>
-                <Card.Img variant="top" src="holder.js/100px180" />
-                <Card.Body>
-                    <Card.Text>
-                        <Button onClick={onCategorySelect}>asf</Button>
-                    </Card.Text>
-                </Card.Body>
-            </Card>
-            
-        </div>
-        <Container>
+                    </Card.Body>
+                </Card>
+                <Card style={{ width: '7.96rem' }} className='mx-3'>
+                    <Card.Img variant="top" src="holder.js/100px180" />
+                    <Card.Body>
+                        <Card.Text>
+                        <Button onClick={()=>loadWines("whites")}>WHITES</Button>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+                <Card style={{ width: '7.96rem' }} className='mx-3'>
+                    <Card.Img variant="top" src="holder.js/100px180" />
+                    <Card.Body>
+                        <Card.Text>
+                            <Button onClick={()=>loadWines("rose")}>ROSE</Button>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            </div>
+            {showOffCanvas && <OffCanvasSidebar showOffCanvas handleClose={handleClose} handleSortRating={handleSortRating} handleFilterCategory={handleFilterCategory}/>}
+            <div className='d-flex justify-content-end my-2'>
+                <Button variant="outline-dark" onClick={handleShow} className="me-2">
+                    Filter & Sort
+                </Button>
+            </div>
             <div className='d-flex flex-wrap justify-content-between'>
                 {wines.map((data) =>{
                     return(
@@ -105,7 +124,6 @@ const Wines = () => {
                 }         
                 )}
             </div>
-        </Container>
         </Container>
     )
 }

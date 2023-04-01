@@ -66,12 +66,14 @@ const AddWine = () => {
                     <option value="Sparkling">Sparkling</option>
                     <option value="Rose">Rose</option>
                     <option value="White">White</option>
+                    <option value="White">Dessert</option>
+                    <option value="White">Port</option>
                 </Form.Control>
                 <div className='py-1'>
                     <input type="text" placeholder="Enter wine location" value={wineLocation} onChange={(e) => setWineLocation(e.target.value)}/>
                 </div>
                 <div className='py-1'>
-                    <input type="text" placeholder="Enter wine rating" value={wineRating} onChange={(e) => setWineRating(e.target.value)}/>
+                    <input type="number" min="0" max="5" step ="0.5" placeholder="Enter wine rating" value={wineRating} onChange={(e) => setWineRating(e.target.value)}/>
                 </div>
                 <div className='py-1'>
                     <input type="text" placeholder="Enter winery" value={winery} onChange={(e) => setWinery(e.target.value)}/>

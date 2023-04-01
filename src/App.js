@@ -1,17 +1,18 @@
 import Home from './components/home.component';
 import NavigationBar from './components/navigation.component';
-import { Routes, Route } from 'react-router-dom';
 import SignIn from './components/signIn.component';
 import ErrorPage from './components/error.component';
 import Register from './components/register.component';
 import Wines from './components/wines.component';
 import AddWine from './components/addWine.component';
-
+import Cart from './components/cart.component';
 import {
   createBrowserRouter,
   RouterProvider,
-  createRoutesFromElements
+  createRoutesFromElements,
+  Route
 } from "react-router-dom";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
       <Route path={"register"} element={<Register/>} errorElement={<ErrorPage />}></Route>
       <Route path={"wines"} element={<Wines/>}></Route>
       <Route path={"add-wine"} element={<AddWine/>}></Route>
+      <Route path={"cart"} element={<Cart/>}></Route>
     </Route>
   )
 );
