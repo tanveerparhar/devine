@@ -1,15 +1,18 @@
 import { useState, useEffect} from 'react';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container, Spinner } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import wineDefault from "../assets/wineDefault.png";
-import { winesRef } from '../utils/firebase.utils';
+import { winesRef,storage } from '../utils/firebase.utils';
+import { ref, getDownloadURL } from "firebase/storage";
 import { query, where, getDocs, orderBy } from "firebase/firestore";
 import OffCanvasSidebar from './offCanvasSidebar.component';
 
 const Wines = () => {
     const [wines, setWines] = useState([]);
+    const [imageArray, setImageArray] = useState([]);
     const [showOffCanvas, setShowOffCanvas] = useState(false);
+    const [showSpinner, setShowSpinner] = useState(false)
     const handleClose = () => setShowOffCanvas(false);
     const handleShow = () => setShowOffCanvas(true);
 
@@ -17,6 +20,7 @@ const Wines = () => {
         loadWines("rose");
     }, []);
 
+    
     const loadWines = async(type) => {
         const winesData = await fetch(`https://api.sampleapis.com/wines/${type}`);
         const resp = await winesData.json();
@@ -30,43 +34,52 @@ const Wines = () => {
         currentTarget.src = wineDefault;
     }
 
+    // image async await handle
+    const handleImage = async(doc,urlArray) => {
+        const imgURL = await getDownloadURL(ref(storage, `${doc.data().wineImage}`))
+        urlArray.push(imgURL)
+    }
+
     //reusable snapshot code
     const handleSnapshot = async(qry) => {
-        const newWines =[];
+        const newWines = [];
+        let imgURL;
+        let urlArray=[];
+        setShowSpinner(true);
         try{
-        const res = query(winesRef, qry);
-        const querySnapshot = await getDocs(res);
-            // console.log("snapshot => ", querySnapshot);
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
+            const res = query(winesRef, qry);
+            const querySnapshot = await getDocs(res);
+            console.log(querySnapshot)
+            querySnapshot.forEach(async(doc) => {
+                handleImage(doc, urlArray)
+
+                // doc.data() should be  never undefined for query doc snapshots
                 const updatedNames = {
                     id : doc.id,
-                    image : doc.data().wineImage,
+                    //image : await getDownloadURL(ref(storage, `${doc.data().wineImage}`)),
                     wine : doc.data().wineName,
                     winery : doc.data().winery,
                     rating : doc.data().wineRating,
                     location : doc.data().wineLocation,
                 };
                 newWines.push(updatedNames);
-                console.log(doc.id, " => ", doc.data());
-            });
+                //console.log(doc.id, " => ", doc.data().wineRating);
+                
+        });
         } catch(error) {
             console.error("Someting went wrong in running query ", error)
         }
-        //console.log(newWines)
+        setShowSpinner(false)
+        Promise.all(urlArray).then(value => setImageArray(urlArray))
         setWines(newWines);
     }
-    // Create a query against the collection.
-    const onCategorySelect = async (category) =>{
-       
-    }
 
-    const handleFilterCategory = async (category) =>{
+    const handleFilterCategory = (category) =>{
         handleSnapshot(where("wineCategory", "==", `${category}`))
      }
 
     const handleSortRating = () => {
-       handleSnapshot(orderBy("wineRating"))
+       handleSnapshot(orderBy("wineRating", "desc"))
     }
 
     return(
@@ -98,18 +111,24 @@ const Wines = () => {
                     </Card.Body>
                 </Card>
             </div>
+
             {showOffCanvas && <OffCanvasSidebar showOffCanvas handleClose={handleClose} handleSortRating={handleSortRating} handleFilterCategory={handleFilterCategory}/>}
+            
             <div className='d-flex justify-content-end my-2'>
                 <Button variant="outline-dark" onClick={handleShow} className="me-2">
                     Filter & Sort
                 </Button>
             </div>
+
+            {
+            showSpinner ? <Spinner animation="border" />
+            :
             <div className='d-flex flex-wrap justify-content-between'>
-                {wines.map((data) =>{
+                {wines.map((data, i) =>{
                     return(
                         <Card key={data.id} className='my-3' style={{  width: '200px', border:0 }}>
                             {/* <Card.Img variant="top" src={data.image}/> */}
-                            <img src={data.image} className="rounded mx-auto d-bock" onError={onImageError} width="90px" height="280px"/>
+                            <img src={data.image || imageArray[i]} className="rounded mx-auto d-bock" onError={onImageError} width="90px" height="280px"/>
                             <Card.Body>
                                 <Card.Title>{data.wine}</Card.Title>
                                 <ListGroup className="list-group-flush">
@@ -124,6 +143,7 @@ const Wines = () => {
                 }         
                 )}
             </div>
+            }
         </Container>
     )
 }

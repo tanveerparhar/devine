@@ -32,11 +32,6 @@ const AddWine = () => {
     const resultToast = (res) =><ToastContainer className="p-3" position={`top-end`}>
                                     <Toast show={showA} onClose={toggleShowA} bg={res ? `success` : `danger`}>
                                         <Toast.Header>
-                                        {/* <img
-                                            src=""
-                                            className="rounded me-2"
-                                            alt=""
-                                        /> */}
                                         <strong className="me-auto">Notification</strong>
                                         </Toast.Header>
                                         <Toast.Body className="text-white">{res ? `wine details successfully added` : `something went wrong, check console`}</Toast.Body>
@@ -49,14 +44,8 @@ const AddWine = () => {
             {wineAdded === '' ? true : (wineAdded ? resultToast(wineAdded) : resultToast(wineAdded))}
             <div className='d-flex flex-column align-items-center border border-dark' style={{margin:'10rem'}}>
                 <h1 className='py-3'>Add Wine Details</h1>
-                <div className='py-1'>
-                    <input type="text" placeholder="Enter wine name"  value={wineName} onChange={(e) => setWineName(e.target.value)}/>
-                </div>
-                {/* <Form.Select className='border border-dark rounded-0' style={{width: '40.5%'}} //value={type}
-                onChange={e => {
-                    console.log("e.target.value", e.target.value);
-                    //setType(e.target.value);
-                }}> */}
+                
+                <input className='mb-2' style={{width: '40.5%'}} type="text" placeholder="Enter wine name"  value={wineName} onChange={(e) => setWineName(e.target.value)}/>
                 
                 <Form.Control
                     as="select"
@@ -66,18 +55,16 @@ const AddWine = () => {
                     <option value="Sparkling">Sparkling</option>
                     <option value="Rose">Rose</option>
                     <option value="White">White</option>
-                    <option value="White">Dessert</option>
-                    <option value="White">Port</option>
+                    <option value="Dessert">Dessert</option>
+                    <option value="Port">Port</option>
                 </Form.Control>
-                <div className='py-1'>
-                    <input type="text" placeholder="Enter wine location" value={wineLocation} onChange={(e) => setWineLocation(e.target.value)}/>
-                </div>
-                <div className='py-1'>
-                    <input type="number" min="0" max="5" step ="0.5" placeholder="Enter wine rating" value={wineRating} onChange={(e) => setWineRating(e.target.value)}/>
-                </div>
-                <div className='py-1'>
-                    <input type="text" placeholder="Enter winery" value={winery} onChange={(e) => setWinery(e.target.value)}/>
-                </div>
+                
+                <input className='mt-2 mb-1' style={{width: '40.5%'}} type="text" placeholder="Enter wine location" value={wineLocation} onChange={(e) => setWineLocation(e.target.value)}/>
+                
+                <input className='my-1' style={{width: '40.5%'}} type="number" min="0" max="5" step ="0.5" placeholder="Enter rating 0 - 5" value={wineRating} onChange={(e) => setWineRating(parseFloat(e.target.value))}/>
+                
+                <input className='my-1' style={{width: '40.5%'}} type="text" placeholder="Enter winery" value={winery} onChange={(e) => setWinery(e.target.value)}/>
+                
                 <Form.Group controlId="formFile" className="py-1" style={{width: '41%' }}>
                     <Form.Control type="file" name="wineImage" 
                         onChange={(event) => {

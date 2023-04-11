@@ -20,7 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
-const storage = getStorage();
+export const storage = getStorage();
 export const winesRef = collection(db, "wines");
 
 let user;
@@ -59,7 +59,7 @@ export const signInUser = async (email,password) => {
 //create data
 export const createWineCollec = async({wineName,wineCategory,wineLocation,wineRating,winery,wineImage}) => {
    let res;
-   console.log("createwinecolle image",wineCategory)
+   console.log("createwinecolle image",wineRating)
    try {
       if(!wineName || !wineCategory || !wineLocation || !wineRating || !winery || !wineImage){
          res = false;

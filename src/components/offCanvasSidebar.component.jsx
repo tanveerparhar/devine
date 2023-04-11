@@ -20,7 +20,7 @@ const OffCanvasSidebar = ({showOffCanvas, handleClose, handleSortRating, handleF
                 <Accordion.Body>
                     <Accordion>
                         <Accordion.Header>Category</Accordion.Header>
-                        <Accordion.Body className="cursor-pointer">
+                        <Accordion.Body className="">
                             <div role="button" onClick={()=>handleFilterCategory('sparkling')}>Sparkling</div>
                             <div role="button" onClick={()=>handleFilterCategory('white')}>Whites</div>
                             <div role="button" onClick={()=>handleFilterCategory('red')}>Reds</div>
@@ -29,15 +29,14 @@ const OffCanvasSidebar = ({showOffCanvas, handleClose, handleSortRating, handleF
                             <div role="button" onClick={()=>handleFilterCategory('rose')}>Rose</div>
                         </Accordion.Body>
                     </Accordion>
-                    
                 </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="1">
                 <Accordion.Header>SORT BY</Accordion.Header>
-                <Accordion.Body>
-                    <span onClick={handleSortRating}>
+                <Accordion.Body >
+                    <div role="button" onClick={handleSortRating} className="">
                         Rating
-                    </span>
+                    </div>
                     
                 </Accordion.Body>
                 </Accordion.Item>
