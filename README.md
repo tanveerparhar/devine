@@ -2,9 +2,8 @@
 Tanveer Singh    Gabriela Capatina    Jose cano Artadi
 
 # Screenshots
-<img src="./src/assets/Screeenshot1.jpg"
-     alt="screenshot"
-     style="width:50px, height:50px" />
+
+     ![alt text](./src/assets/Screeenshot1.jpg)
 
 # Getting Started with Create React App
 
