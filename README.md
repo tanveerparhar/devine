@@ -2,8 +2,12 @@
 Tanveer Singh    Gabriela Capatina    Jose cano Artadi
 
 # Screenshots
+![Screenshot 2023-04-22 at 2 58 47 PM](https://user-images.githubusercontent.com/31854574/233802509-727d3ed8-5594-43dc-b83a-d34efaa4951f.jpg)
 
-     ![alt text](./src/assets/Screeenshot1.jpg)
+     ![Screenshot 2023-04-22 at 2 59 14 PM](https://user-images.githubusercontent.com/31854574/233802517-4927cea4-1cb2-458f-8521-d62168e00315.jpg)
+![Screenshot 2023-04-22 at 2 59 07 PM](https://user-images.githubusercontent.com/31854574/233802527-44e467ae-48f6-4ace-bc36-93a657f77d3d.jpg)
+
+![Screenshot 2023-04-22 at 2 59 14 PM](https://user-images.githubusercontent.com/31854574/233802533-ff39c7f7-0f97-4db8-bdbe-9499922ae4ca.jpg)
 
 # Getting Started with Create React App
 
