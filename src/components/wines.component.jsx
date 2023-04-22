@@ -1,17 +1,23 @@
 import { useState, useEffect} from 'react';
-import { Button, Container, Spinner } from 'react-bootstrap';
+import { Button, Container, Spinner, Modal } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import wineDefault from "../assets/wineDefault.png";
+import redWineCard from "../assets/redWineCard.webp";
+import whiteWineCard from "../assets/whiteWineCard.webp";
+import roseWineCard from "../assets/roseWineCard.webp";
 import { winesRef,storage } from '../utils/firebase.utils';
 import { ref, getDownloadURL } from "firebase/storage";
 import { query, where, getDocs, orderBy } from "firebase/firestore";
 import OffCanvasSidebar from './offCanvasSidebar.component';
+import CartModal from './cartmodal.component';
 
 const Wines = () => {
     const [wines, setWines] = useState([]);
     const [imageArray, setImageArray] = useState([]);
+    const [singleWineData, setSingleWineData] = useState({});
     const [showOffCanvas, setShowOffCanvas] = useState(false);
+    const [modalShow, setModalShow] = useState(false);
     const [showSpinner, setShowSpinner] = useState(false)
     const handleClose = () => setShowOffCanvas(false);
     const handleShow = () => setShowOffCanvas(true);
@@ -82,12 +88,21 @@ const Wines = () => {
        handleSnapshot(orderBy("wineRating", "desc"))
     }
 
+    const onHandleModal = (data,image) => {
+        if(!data.image){
+            data.image = image;
+        }
+        setSingleWineData(data)
+        setModalShow(true)
+        console.log(singleWineData)
+    }
+
     return(
         <Container className=''>
             <div className='display-6'><i>CATEGORIES</i></div>
             <div className='d-flex my-4'>
                 <Card style={{ width: '7.96rem' }} className='mr-3'>
-                    <Card.Img variant="top" src="holder.js/100px180" />
+                    <Card.Img variant="top" src={redWineCard} />
                     <Card.Body>
                     <Card.Text>
                     <Button onClick={()=>loadWines("reds")}>REDS</Button>
@@ -95,7 +110,7 @@ const Wines = () => {
                     </Card.Body>
                 </Card>
                 <Card style={{ width: '7.96rem' }} className='mx-3'>
-                    <Card.Img variant="top" src="holder.js/100px180" />
+                    <Card.Img variant="top" src={whiteWineCard} />
                     <Card.Body>
                         <Card.Text>
                         <Button onClick={()=>loadWines("whites")}>WHITES</Button>
@@ -103,7 +118,7 @@ const Wines = () => {
                     </Card.Body>
                 </Card>
                 <Card style={{ width: '7.96rem' }} className='mx-3'>
-                    <Card.Img variant="top" src="holder.js/100px180" />
+                    <Card.Img variant="top" src={roseWineCard} />
                     <Card.Body>
                         <Card.Text>
                             <Button onClick={()=>loadWines("rose")}>ROSE</Button>
@@ -120,6 +135,8 @@ const Wines = () => {
                 </Button>
             </div>
 
+            <div><CartModal show={modalShow} onHide={()=>setModalShow(false)} singlewinedata={singleWineData}/></div>
+
             {
             showSpinner ? <Spinner animation="border" />
             :
@@ -135,10 +152,14 @@ const Wines = () => {
                                     <ListGroup.Item>winery: {data.winery}</ListGroup.Item>
                                     <ListGroup.Item>rating: {data.rating.average || data.rating}</ListGroup.Item>
                                     <ListGroup.Item>location: {data.location}</ListGroup.Item>
+                                    <ListGroup.Item>price: $50</ListGroup.Item>
+                                    <ListGroup.Item>
+                                        <Button variant="outline-dark" onClick={() => onHandleModal(data,imageArray[i])}>Add to Cart</Button>
+                                    </ListGroup.Item>
                                 </ListGroup>
                                 {/* <Button variant="primary">Go somewhere</Button> */}
                             </Card.Body>
-                        </Card>  
+                        </Card>
                     )
                 }         
                 )}

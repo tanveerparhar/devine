@@ -22,6 +22,7 @@ const db = getFirestore(app);
 const auth = getAuth();
 export const storage = getStorage();
 export const winesRef = collection(db, "wines");
+export const cartRef = collection(db, "cart");
 
 let user;
 //register
@@ -72,7 +73,7 @@ export const createWineCollec = async({wineName,wineCategory,wineLocation,wineRa
       await uploadBytes(storageRef, wineImage).then((snapshot) => {
          console.log('Uploaded the file!  ',snapshot);
       });
-      //cosnvert to lowercase
+      //convert to lowercase
       wineCategory = wineCategory.toLowerCase();
       const docRef = await addDoc(winesRef, {
          wineName,
@@ -91,5 +92,24 @@ export const createWineCollec = async({wineName,wineCategory,wineLocation,wineRa
    return res;
 }
 
+//add to cart
+export const addToCartCollec = async(wine,location,winery,image,quantity) => {
+   let res;
+   try {
+      const docRef = await addDoc(cartRef, {
+         wine,
+         location,
+         winery,
+         image,
+         quantity
+      });
+      res = true;
+      console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+         console.error("Error adding document, ", e);
+         res = false;
+      }
+   return res
+}
 
 
