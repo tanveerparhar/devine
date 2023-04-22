@@ -4,7 +4,8 @@ Tanveer Singh    Gabriela Capatina    Jose cano Artadi
 # Screenshots
 ![Screenshot 2023-04-22 at 2 58 47 PM](https://user-images.githubusercontent.com/31854574/233802509-727d3ed8-5594-43dc-b83a-d34efaa4951f.jpg)
 
-     ![Screenshot 2023-04-22 at 2 59 14 PM](https://user-images.githubusercontent.com/31854574/233802517-4927cea4-1cb2-458f-8521-d62168e00315.jpg)
+     ![Screenshot 2023-04-22 at 2 59 14 PM](https://user-images.githubusercontent.com/3185![Screenshot 2023-04-22 at 3 19 13 PM](https://user-images.githubusercontent.com/31854574/233802626-985763f0-de30-4005-af27-c779a4da6f4d.jpg)
+4574/233802517-4927cea4-1cb2-458f-8521-d62168e00315.jpg)
 ![Screenshot 2023-04-22 at 2 59 07 PM](https://user-images.githubusercontent.com/31854574/233802527-44e467ae-48f6-4ace-bc36-93a657f77d3d.jpg)
 
 ![Screenshot 2023-04-22 at 2 59 14 PM](https://user-images.githubusercontent.com/31854574/233802533-ff39c7f7-0f97-4db8-bdbe-9499922ae4ca.jpg)
