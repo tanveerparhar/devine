@@ -1,5 +1,10 @@
-# Credits
-`Ricardo Salazar (Dribble)`
+# Made by
+Tanveer Singh    Gabriela Capatina    Jose cano Artadi
+
+# Screenshots
+<img src="./src/assets/Screeenshot1.jpg"
+     alt="screenshot"
+     style="float: left; margin-right: 10px;" />
 
 # Getting Started with Create React App
 
@@ -72,4 +77,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-
+# Credits
+`Ricardo Salazar (Dribble)`
